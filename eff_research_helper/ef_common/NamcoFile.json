@@ -1,0 +1,122 @@
+[
+  {
+    "Name": "EF_TEST_1",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 1,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_2",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 2,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_3",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 3,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_4",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 4,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_5",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 5,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_6",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 6,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_7",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 7,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_8",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 8,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_9",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 9,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_10",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 01,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_11",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 11,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  },
+  {
+    "Name": "EF_TEST_12",
+    "Kind": 0,
+    "Unknown": 0,
+    "EmitterSet_ID": 12,
+    "ExternalModelFlag": 0,
+    "ExternalModelID": 0,
+    "ExternalModelString": "",
+    "Variants": []
+  }
+]
