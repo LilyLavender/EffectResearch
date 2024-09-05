@@ -5,7 +5,7 @@ Research into Smash Ultimate's effects
 - Emitter subsection documentation
 - eff_research_helper. Plugin & template ef_common to help with testing edits to eff files
     - Usage:
-    1. Download the plugin from the [latest release]() and put it in `ultimate/mods/eff_research/`
+    1. Download the plugin from the [latest release](https://github.com/LilyLavender/EffectResearch/releases) and put it in `ultimate/mods/eff_research/`
     2. Download the `ef_common` folder from this repo
     3. Copy the effect you're testing into the `P_CmnTest` folder
     4. Click on `CmnTestDuper.py` to duplicate the folder and all of its contents
