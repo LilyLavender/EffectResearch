@@ -5,7 +5,7 @@ Note that floats are stored Big-endian in IEEE-754. A recommended IEEE-754 conve
 ## EA - Emitter Animations
 All EAs have the same format: 
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Enable `01` or disable `00` animation |
 | 0x01 | flag | Loop animation |
 | 0x02 | flag | Randomize playback start frame |
@@ -15,7 +15,7 @@ All EAs have the same format:
 | 0x0C+0x10n | float | Keyframe n X |
 | 0x10+0x10n | float | Keyframe n Y |
 | 0x14+0x10n | float | Keyframe n Z |
-| 0x18+0x10n | float | Keyframe n frame |  
+| 0x18+0x10n | float | Keyframe n frame |
 > **The length of an EA can vary depending on the number of keys**
 
 Here's an example EAET:
@@ -63,7 +63,7 @@ The anim is **enabled**, will **not loop**, does **not have a random start frame
 
 ### List of Emitter Animations
 | Name | Verbose | Description |
-| --- |  --- | --- |
+| --- | --- | --- |
 | EAET | EmitterAnimationTranslate | Animation for position of the emitter |
 | EAER | EmitterAnimationRotate | Animation for rotation of the emitter |
 | EAES | EmitterAnimationScale | Animation for scale of the emitter |
@@ -73,11 +73,11 @@ The anim is **enabled**, will **not loop**, does **not have a random start frame
 | EAC1 | EmitterAnimationColor1 | Animation for color1 of the emitter |
 | EADV | EmitterAnimationDesignatedDirectionalVelocity | Animation for designated directional velocity of the emitter |
 | EAGV | EmitterAnimationGravityScale | Animation for gravity scale of the emitter |
-| EAOV | EmitterAnimationAllDirectionalVelocity | Animation for all directional velocity of the emitter |  
-| EASS | EmitterAnimationVolumeScale | Aninmation for volume of the emitter |  
-| EATR | EmitterAnimationEmissionRate | Animation for emission rate of the emitter |  
-| EAPL | EmitterAnimationParticleLife | Animation for lifespan of individual particles |  
-| EASL | EmitterAnimationParticleScale | Animation for scale of individual particles |  
+| EAOV | EmitterAnimationAllDirectionalVelocity | Animation for all directional velocity of the emitter |
+| EASS | EmitterAnimationVolumeScale | Aninmation for volume of the emitter |
+| EATR | EmitterAnimationEmissionRate | Animation for emission rate of the emitter |
+| EAPL | EmitterAnimationParticleLife | Animation for lifespan of individual particles |
+| EASL | EmitterAnimationParticleScale | Animation for scale of individual particles |
 
 ## EM - Emitter
 - EMTR - contains many data sections for things such as behavior fields and animations
@@ -89,7 +89,7 @@ The anim is **enabled**, will **not loop**, does **not have a random start frame
 ## F - Fields 
 More documentation for fields is needed.
 | Name | Verbose | Description |
-| --- |  --- | --- |
+| --- | --- | --- |
 | FMAG | FieldMagnetData | Magnetic field |
 | FCOV | FieldConvergenceData | Convergence field |
 | FCOL | FieldCollisionData | Collision field |
@@ -104,7 +104,7 @@ More documentation for fields is needed.
 
 ### FMAG - Magnetic Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Whether or not to follow the emitter |
 | 0x01 | flag | X flag |
 | 0x02 | flag | Y flag |
@@ -121,11 +121,11 @@ More documentation for fields is needed.
 | 0x28+0x10n | float | Keyframe n X |
 | 0x2C+0x10n | float | Keyframe n Y |
 | 0x30+0x10n | float | Keyframe n Z |
-| 0x34+0x10n | float | Keyframe n timing |  
+| 0x34+0x10n | float | Keyframe n timing |
 
 ### FCOV - Convergence Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Convergence type |
 | 0x01 | flag | Padding X |
 | 0x02 | flag | Padding Y |
@@ -142,11 +142,11 @@ More documentation for fields is needed.
 | 0x28+0x10n | float | Keyframe n X |
 | 0x2C+0x10n | float | Keyframe n Y |
 | 0x30+0x10n | float | Keyframe n Z |
-| 0x34+0x10n | float | Keyframe n timing |  
+| 0x34+0x10n | float | Keyframe n timing |
 
 ### FCOL - Collision Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Collision type. `0`: bounce, `1`: disappear |
 | 0x01 | flag | Whether to process in world |
 | 0x02 | flag | Whether to use a common collision plane |
@@ -158,7 +158,7 @@ More documentation for fields is needed.
 
 ### FCLN - Curl Noise Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Interpolation |
 | 0x01 | flag | Random noise offset |
 | 0x02 | flag | Whether to accept curl noise affect in world coordinates |
@@ -174,7 +174,7 @@ More documentation for fields is needed.
 
 ### FSPN - Spin Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | float | Rotation force |
 | 0x04 | int | Axis |
 | 0x08 | float | Outer velocity |
@@ -186,7 +186,7 @@ More documentation for fields is needed.
 | 0x20+0x10n | float | Keyframe n X |
 | 0x24+0x10n | float | Keyframe n Y |
 | 0x28+0x10n | float | Keyframe n Z |
-| 0x2C+0x10n | float | Keyframe n timing |  
+| 0x2C+0x10n | float | Keyframe n timing |
 | 0xA0 | float | Enable/disable animation 1: Diffusion particle time |
 | 0xA4 | float | Loop playback |
 | 0xA8 | float | Randomize start position |
@@ -195,11 +195,11 @@ More documentation for fields is needed.
 | 0xB4+0x10n | float | Keyframe n X |
 | 0xB8+0x10n | float | Keyframe n Y |
 | 0xBC+0x10n | float | Keyframe n Z |
-| 0xC0+0x10n | float | Keyframe n timing |  
+| 0xC0+0x10n | float | Keyframe n timing |
 
 ### FRND - Random Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Use fixed random seed |
 | 0x01 | flag | Detailed options |
 | 0x02 | flag | Air resistance |
@@ -226,11 +226,11 @@ More documentation for fields is needed.
 | 0x50+0x10n | float | Keyframe n X |
 | 0x54+0x10n | float | Keyframe n Y |
 | 0x58+0x10n | float | Keyframe n Z |
-| 0x5C+0x10n | float | Keyframe n timing |  
+| 0x5C+0x10n | float | Keyframe n timing |
 
 ### FRN1 - Simple Random Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | float | Random width X |
 | 0x04 | float | Random width Y |
 | 0x08 | float | Random width Z |
@@ -247,7 +247,7 @@ More documentation for fields is needed.
 
 ### FPAD - Add to position Field
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | flag | Whether to add in world coordinate system |
 | 0x01 | flag | Padding X |
 | 0x02 | flag | Padding Y |
@@ -268,7 +268,7 @@ More documentation for fields is needed.
 ### FCSF - Custom Field
 Needs more testing
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | int | Flag |
 | 0x04 | float |  |
 | 0x08 | float |  |
@@ -301,7 +301,7 @@ More documentation for stripes is needed.
 
 ### EP01 - Connected Stripe
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | int | Calculation type |
 | 0x04 | int | Whether to follow the emitter |
 | 0x08 | int | Option |
@@ -315,7 +315,7 @@ More documentation for stripes is needed.
 
 ### EP02 - Historical Stripe
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | int | Calculation type |
 | 0x04 | int | Whether to follow the emitter |
 | 0x08 | int | Option |
@@ -330,7 +330,7 @@ More documentation for stripes is needed.
 
 ### EP03 - Historical Stripe 2 (Super stripe)
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | int | Calculation type |
 | 0x04 | int | Whether to follow the emitter |
 | 0x08 | int | Option |
@@ -367,7 +367,7 @@ More documentation for stripes is needed.
 
 ### EP04 - Area Loop Data
 | Offset | Type | Description |
-| ---: |  --- | --- |
+| ---: | --- | --- |
 | 0x00 | float | Position X offset when repeating |
 | 0x04 | float | Position Y offset when repeating |
 | 0x08 | float | Position Z offset when repeating |
