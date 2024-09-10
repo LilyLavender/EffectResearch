@@ -11,12 +11,14 @@
 | flag | int8 that can only have the values `00` (false) and `01` (true) |
 
 ## EmitterData
-### 0x0000-0x004F : Unsure
+### 0x0000-0x004F : Common Data
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0000-0x000F |  |  |  |  |
+| 0x0000 | int32 | Flag | ❌ | ? |
+| 0x0004 | int32 | RandomSeed | ❌ | Random seed |
+| 0x0008 | int32 | reserved0 | ❌ | Padding |
+| 0x000C | int32 | reserved0 | ❌ | Padding |
 | 0x0010 | int8[32] | Name | ❌ | The name of the emitter |
-| 0x0030-0x004F |  |  |  |  |
 
 ### 0x0050-0x074F : Emitter static uniform block
 | Offset | Type | Name | in .json? | Description |
