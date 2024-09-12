@@ -536,8 +536,8 @@ Three texture samplers are used.
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x09F0+0x20n | int64 | TextureID | ✅ | GUID of texture to use |
-| 0x09F8+0x20n | int8 | WrapU | ✅ | U wrap mode. In `.json`, this can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
-| 0x09F9+0x20n | int8 | WrapV | ✅ | V wrap mode. In `.json`, this can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
+| 0x09F8+0x20n | int8 | WrapU | ✅ | U wrap mode. In `.json`, this can be "Mirror" (`00`), "Repeat" (`01`), "ClampEdge" (`02`), or "MirrorOnce" (`03`) |
+| 0x09F9+0x20n | int8 | WrapV | ✅ | V wrap mode. In `.json`, this can be "Mirror" (`00`), "Repeat" (`01`), "ClampEdge" (`02`), or "MirrorOnce" (`03`) |
 | 0x09FA+0x20n | int8 | Filter | ✅ | Filter mode |
 | 0x09FB+0x20n | int8 | isSphereMap | ❌ | Whether sphere map is used |
 | 0x09FC+0x20n | float | MaxLOD | ✅ | Effective mip level (0.0 to 15.99) |
