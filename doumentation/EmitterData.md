@@ -1,5 +1,8 @@
 # EmitterData
 `EmitterData.json` is an easier file to make edits on, but it doesn't currently contain every editable value. This is where `EmitterData.bin` comes in. It's the raw binary data from the `.eff`. When building an eff, you can edit anything not in the `.json` by simply editing the hex in the `.bin`. Below is a table containing the hex offset, data type, name, a short description, and whether or not every label is in the `.json` or not.  
+> `EmitterData.bin` can be viewed & edited via any hex editor. A recommended web one is [hexed.it](https://hexed.it/). It even cashes itself for use offline. 
+Note that floats are stored Big-endian in IEEE-754. A recommended IEEE-754 converter can be found on [h-schmidt](https://www.h-schmidt.net/FloatConverter/IEEE754.html), although it uses Little-endian.
+
 
 ### Key
 | Symbol | Meaning |
