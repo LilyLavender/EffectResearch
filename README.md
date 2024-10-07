@@ -3,6 +3,7 @@ Research into Smash Ultimate's effects
 
 ## Everything in the repo
 - Emitter subsection documentation
+- EmitterData documentation
 - eff_research_helper. Plugin & template ef_common to help with testing edits to eff files
     - Usage:
     1. Download the plugin from the [latest release](https://github.com/LilyLavender/EffectResearch/releases) and put it in `ultimate/mods/eff_research/`
