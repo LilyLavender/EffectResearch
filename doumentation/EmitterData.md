@@ -1,6 +1,7 @@
 # EmitterData
 When using [EffectConverter](https://github.com/KillzXGaming/EffectLibrary), the program will spit out two versions of EmitterData- a `.json` and `.bin`.  
 `EmitterData.json` is the easier to read and edit version, and is what should be used. It can be edited with any text editor. `EmitterData.bin` is the raw binary data from the `.eff`, and any changes to it will **not** be reflected in the built `.eff`. Below is a table containing the hex offset, data type, name, and a short description of every label in EmitterData.  
+> Note than in `EmitterData.bin`, floats are stored Big-endian in IEEE-754. A recommended IEEE-754 converter can be found on [h-schmidt](https://www.h-schmidt.net/FloatConverter/IEEE754.html), although it uses Little-endian.
 
 ### Key
 | Symbol | Meaning |
@@ -539,8 +540,8 @@ Three texture samplers are used.
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x09F0+0x20n | int64 | TextureID | ✅ | GUID of texture to use |
-| 0x09F8+0x20n | int8 | WrapU | ✅ | U wrap mode. This can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
-| 0x09F9+0x20n | int8 | WrapV | ✅ | V wrap mode. This can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
+| 0x09F8+0x20n | int8 | WrapU | ✅ | U wrap mode. This can be "Mirror" (`00`), "Repeat" (`01`), "ClampEdge" (`02`), or "MirrorOnce" (`03`) |
+| 0x09F9+0x20n | int8 | WrapV | ✅ | V wrap mode. This can be "Mirror" (`00`), "Repeat" (`01`), "ClampEdge" (`02`), or "MirrorOnce" (`03`) |
 | 0x09FA+0x20n | int8 | Filter | ✅ | Filter mode |
 | 0x09FB+0x20n | int8 | isSphereMap | ✅ | Whether sphere map is used |
 | 0x09FC+0x20n | float | MaxLOD | ✅ | Effective mip level (0.0 to 15.99) |
