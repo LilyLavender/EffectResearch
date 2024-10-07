@@ -1,12 +1,14 @@
 # EmitterData
-`EmitterData.json` is an easier file to make edits on, but it doesn't currently contain every editable value. This is where `EmitterData.bin` comes in. It's the raw binary data from the `.eff`. When building an eff, you can edit anything not in the `.json` by simply editing the hex in the `.bin`. Below is a table containing the hex offset, data type, name, a short description, and whether or not every label is in the `.json` or not.  
+When using [EffectConverter](https://github.com/KillzXGaming/EffectLibrary), the program will spit out two versions of EmitterData- a `.json` and `.bin`.  
+`EmitterData.json` is the easier to read and edit version, and is what should be used. It can be edited with any text editor. `EmitterData.bin` is the raw binary data from the `.eff`, and any changes to it will **not** be reflected in the built `.eff`. Below is a table containing the hex offset, data type, name, and a short description of every label in EmitterData.  
 
 ### Key
 | Symbol | Meaning |
 | --- | --- |
 | ✅ | The label is in the `.json` |
 | ❌ | The label is **not** in the `.json` |
-| 🟡 | The label is partially in the `.json`, and editing it does not properly work |
+| 🟡 | The label is partially in the `.json`, and editing it may not properly work |
+| 🔵 | The label is in `.json`, but not in `.bin` |
 | Padding | Pads the file so that bits properly line up. Editing it does nothing |
 | flag | int8 that can only have the values `00` (false) and `01` (true) |
 
@@ -14,13 +16,13 @@
 ### 0x0000-0x004F : Common Data
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0000 | int32 | Flag | ❌ | ? |
-| 0x0004 | int32 | RandomSeed | ❌ | Random seed |
-| 0x0008 | int32 | reserved0 | ❌ | Padding |
-| 0x000C | int32 | reserved0 | ❌ | Padding |
-| 0x0010 | int8[32] | Name | ❌ | The name of the emitter |
+| 0x0000 | int32 | Flag | ✅ | ? |
+| 0x0004 | int32 | RandomSeed | ✅ | Random seed |
+| 0x0008 | int32 | reserved0/Padding1 | ✅ | Padding |
+| 0x000C | int32 | reserved0/Padding2 | ✅ | Padding |
+| 0x0010 | int8[32] | Name | ✅ | The name of the emitter |
 
-### 0x0050-0x074F : Emitter static uniform block
+### 0x0050-0x074F : EmitterStatic 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x0050 | int32 | Flags1 | ✅ | ? |
@@ -166,124 +168,125 @@
 | 0x0544+0x10n | float | Y | ✅ | Alpha1 keyframe n Y | 
 | 0x0548+0x10n | float | Z | ✅ | Alpha1 keyframe n Z | 
 | 0x054C+0x10n | float | Time | ✅ | Alpha1 keyframe n frame | 
-| 0x05C0 | float | SoftEdgeParam | ❌ | Soft particles |
-| 0x05C4 | float | SoftEdgeParam | ❌ | Soft particles |
-| 0x05C8 | float | FresnelAlphaParam | ❌ | Fresnel alpha |
-| 0x05CC | float | FresnelAlphaParam | ❌ | Fresnel alpha |
-| 0x05D0 | float | NearDistAlphaParam | ❌ | Near distance alpha |
-| 0x05D4 | float | NearDistAlphaParam | ❌ | Near distance alpha |
-| 0x05D8 | float | FarDistAlphaParam | ❌ | Far distance alpha |
-| 0x05DC | float | FarDistAlphaParam | ❌ | Far distance alpha |
-| 0x05E0 | float | DecalParam | ❌ | Decals |
-| 0x05E4 | float | DecalParam | ❌ | Decals |
-| 0x05E8 | float | AlphaThreshold | ❌ | Threshold value for alpha test |
-| 0x05EC | float | reserved6 | ❌ | Padding |
-| 0x05F0 | float | AddVelToScale | ❌ | Add velocity to scale |
-| 0x05F4 | float | SoftPartcileDist | ❌ | Start-to-fade distance |
-| 0x05F8 | float | SoftParticleVolume | ❌ | Soft particle volume value |
-| 0x05FC | float | reserved7 | ❌ | Padding |
-| 0x0600+0x10n | float | X | ❌ | Scale keyframe n X | 
-| 0x0604+0x10n | float | Y | ❌ | Scale keyframe n Y | 
-| 0x0608+0x10n | float | Z | ❌ | Scale keyframe n Z | 
-| 0x060C+0x10n | float | Time | ❌ | Scale keyframe n frame | 
-| 0x0680+0x10n | float | X | ❌ | Shader coefficient keyframe n X | 
-| 0x0684+0x10n | float | Y | ❌ | Shader coefficient keyframe n Y | 
-| 0x0688+0x10n | float | Z | ❌ | Shader coefficient keyframe n Z | 
-| 0x068C+0x10n | float | Time | ❌ | Shader coefficient keyframe n frame | 
-| 0x0700 | float | RotateInitX | ❌ | Initial rotation value X |
-| 0x0704 | float | RotateInitY | ❌ | Initial rotation value Y |
-| 0x0708 | float | RotateInitZ | ❌ | Initial rotation value Z |
-| 0x070C | float | RotateInitEmpty | ❌ | Initial rotation value empty |
-| 0x0710 | float | RotateInitRandX | ❌ |  Initial random rotation X |
-| 0x0714 | float | RotateInitRandY | ❌ |  Initial random rotation Y |
-| 0x0718 | float | RotateInitRandZ | ❌ |  Initial random rotation Z |
-| 0x071C | float | RotateInitRandEmpty | ❌ |  Initial random rotation empty |
-| 0x0720 | float | RotateAddX | ❌ | Rotation velocity X |
-| 0x0724 | float | RotateAddY | ❌ | Rotation velocity Y |
-| 0x0728 | float | RotateAddZ | ❌ | Rotation velocity Z |
-| 0x072C | float | RotateRegist | ❌ | Rotation attenuation rate |
-| 0x0730 | float | RotateAddRandX | ❌ | Rotation velocity randomness X |
-| 0x0734 | float | RotateAddRandY | ❌ | Rotation velocity randomness Y |
-| 0x0738 | float | RotateAddRandZ | ❌ | Rotation velocity randomness Z |
-| 0x073C | float | reserved8 | ❌ | Padding |
-| 0x0740 | float | ScaleLimitDistNear | ❌ | Scale limit distance in front of the camera (near) |
-| 0x0744 | float | ScaleLimitDistFar | ❌ | Scale limit distance in front of the camera (far) |
-| 0x0748 | float | reserved9 | ❌ | Padding |
-| 0x074C | float | reserved9 | ❌ | Padding |
+| 0x05C0 | float | SoftEdgeParam1 | ✅ | Soft particles |
+| 0x05C4 | float | SoftEdgeParam2 | ✅ | Soft particles |
+| 0x05C8 | float | FresnelAlphaParam1 | ✅ | Fresnel alpha |
+| 0x05CC | float | FresnelAlphaParam2 | ✅ | Fresnel alpha |
+| 0x05D0 | float | NearDistAlphaParam1 | ✅ | Near distance alpha |
+| 0x05D4 | float | NearDistAlphaParam2 | ✅ | Near distance alpha |
+| 0x05D8 | float | FarDistAlphaParam1 | ✅ | Far distance alpha |
+| 0x05DC | float | FarDistAlphaParam2 | ✅ | Far distance alpha |
+| 0x05E0 | float | DecalParam1 | ✅ | Decals |
+| 0x05E4 | float | DecalParam2 | ✅ | Decals |
+| 0x05E8 | float | AlphaThreshold | ✅ | Threshold value for alpha test |
+| 0x05EC | float | reserved6/Padding2 | ✅ | Padding |
+| 0x05F0 | float | AddVelToScale | ✅ | Add velocity to scale |
+| 0x05F4 | float | SoftPartcileDist | ✅ | Start-to-fade distance |
+| 0x05F8 | float | SoftParticleVolume | ✅ | Soft particle volume value |
+| 0x05FC | float | reserved7/Padding3 | ✅ | Padding |
+| 0x0600+0x10n | float | X | ✅ | Scale keyframe n X | 
+| 0x0604+0x10n | float | Y | ✅ | Scale keyframe n Y | 
+| 0x0608+0x10n | float | Z | ✅ | Scale keyframe n Z | 
+| 0x060C+0x10n | float | Time | ✅ | Scale keyframe n frame | 
+| 0x0680+0x10n | float | X | ✅ | Shader coefficient keyframe n X | 
+| 0x0684+0x10n | float | Y | ✅ | Shader coefficient keyframe n Y | 
+| 0x0688+0x10n | float | Z | ✅ | Shader coefficient keyframe n Z | 
+| 0x068C+0x10n | float | Time | ✅ | Shader coefficient keyframe n frame | 
+| 0x0700 | float | RotateInitX | ✅ | Initial rotation value X |
+| 0x0704 | float | RotateInitY | ✅ | Initial rotation value Y |
+| 0x0708 | float | RotateInitZ | ✅ | Initial rotation value Z |
+| 0x070C | float | RotateInitEmpty | ✅ | Initial rotation value empty |
+| 0x0710 | float | RotateInitRandX | ✅ |  Initial random rotation X |
+| 0x0714 | float | RotateInitRandY | ✅ |  Initial random rotation Y |
+| 0x0718 | float | RotateInitRandZ | ✅ |  Initial random rotation Z |
+| 0x071C | float | RotateInitRandEmpty | ✅ |  Initial random rotation empty |
+| 0x0720 | float | RotateAddX | ✅ | Rotation velocity X |
+| 0x0724 | float | RotateAddY | ✅ | Rotation velocity Y |
+| 0x0728 | float | RotateAddZ | ✅ | Rotation velocity Z |
+| 0x072C | float | RotateRegist | ✅ | Rotation attenuation rate |
+| 0x0730 | float | RotateAddRandX | ✅ | Rotation velocity randomness X |
+| 0x0734 | float | RotateAddRandY | ✅ | Rotation velocity randomness Y |
+| 0x0738 | float | RotateAddRandZ | ✅ | Rotation velocity randomness Z |
+| 0x073C | float | reserved8/Padding4 | ✅ | Padding |
+| 0x0740 | float | ScaleLimitDistNear | ✅ | Scale limit distance in front of the camera (near) |
+| 0x0744 | float | ScaleLimitDistFar | ✅ | Scale limit distance in front of the camera (far) |
+| 0x0748 | float | reserved9/Padding5 | ✅ | Padding |
+| 0x074C | float | reserved9/Padding6 | ✅ | Padding |
 
-### 0x0750-0x07D7 : Emitter fundamental info
+### 0x0750-0x07D7 : EmitterInfo 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0750 | flag | IsParticleDraw | ❌ | Draw particles |
-| 0x0751 | int8 | SortType | ❌ | Particle sort type |
-| 0x0752 | int8 | CalcType | ❌ | Behavior calculation type |
-| 0x0753 | int8 | FollowType | ❌ | Emitter follow type |
-| 0x0754 | flag | IsFadeEmit | ❌ | Whether to stop emitting in the finalization process |
-| 0x0755 | flag | IsFadeAlphaFade | ❌ | Whether to apply alpha fade in the finalization process |
-| 0x0756 | flag | IsScaleFade | ❌ | Whether to enable scale-fade |
-| 0x0757 | int8 | RandomSeedType | ❌ | Random seed type |
-| 0x0758 | flag | IsUpdateMatrixByEmit | ❌ | Updates the matrix at each emission |
-| 0x0759 | flag | TestAlways | ❌ | Whether to always test |
-| 0x075A | flag | InterpolateEmissionAmount | ❌ | Whether to interpolate the emission amount |
-| 0x075B | flag | IsAlphaFadeIn | ❌ | Whether to apply alpha fade-in |
-| 0x075C | flag | IsScaleFadeIn | ❌ | Whether to enable scale fade-in |
-| 0x075D | int8 | dummy | ❌ | Padding |
-| 0x075E | int8 | dummy | ❌ | Padding |
-| 0x075F | int8 | dummy | ❌ | Padding |
-| 0x0760 | int32 | RandomSeed | ❌ | Random number seed |
-| 0x0764 | int32 | DrawPath | ❌ | Rendering pass |
-| 0x0768 | int32 | AlphaFadeTime | ❌ | Alpha fadeout duration |
-| 0x076C | int32 | FadeInTime | ❌ | Fade-in duration |
-| 0x0770 | float | TransX | ❌ | Emitter position X |
-| 0x0774 | float | TransY | ❌ | Emitter position Y |
-| 0x0778 | float | TransZ | ❌ | Emitter position Z |
-| 0x077C | float | TransRandX | ❌ | Matrix translation X randomness |
-| 0x0780 | float | TransRandY | ❌ | Matrix translation Y randomness |
-| 0x0784 | float | TransRandZ | ❌ | Matrix translation Z randomness |
-| 0x0788 | float | RotateX | ❌ | Emitter rotation X |
-| 0x078C | float | RotateY | ❌ | Emitter rotation Y |
-| 0x0790 | float | RotateZ | ❌ | Emitter rotation Z |
-| 0x0794 | float | RotateRandX | ❌ | Matrix rotation X randomness |
-| 0x0798 | float | RotateRandY | ❌ | Matrix rotation Y randomness |
-| 0x079C | float | RotateRandZ | ❌ | Matrix rotation Z randomness |
-| 0x07A0 | float | ScaleX | ❌ | Emitter scale X |
-| 0x07A4 | float | ScaleY | ❌ | Emitter scale Y |
-| 0x07A8 | float | ScaleZ | ❌ | Emitter scale Z |
-| 0x07AC | float | Color0 | ❌ | Emitter color 0 |
-| 0x07B0 | float | Color0 | ❌ | Emitter color 0 |
-| 0x07B4 | float | Color0 | ❌ | Emitter color 0 |
-| 0x07B8 | float | Color0 | ❌ | Emitter color 0 |
-| 0x07BC | float | Color1 | ❌ | Emitter color 1 |
-| 0x07C0 | float | Color1 | ❌ | Emitter color 1 |
-| 0x07C4 | float | Color1 | ❌ | Emitter color 1 |
-| 0x07C8 | float | Color1 | ❌ | Emitter color 1 |
-| 0x07CC | float | EmissionRangeNear | ❌ | Emission range near distance |
-| 0x07D0 | float | EmissionRangeFar | ❌ | Emission range far distance |
-| 0x07D4 | int32 | EmissionRatioFar | ❌ | Emission ratio at far distance |
+| 0x0750 | flag | IsParticleDraw | ✅ | Draw particles |
+| 0x0751 | int8 | SortType | ✅ | Particle sort type |
+| 0x0752 | int8 | CalcType | ✅ | Behavior calculation type |
+| 0x0753 | int8 | FollowType | ✅ | Emitter follow type |
+| 0x0754 | flag | IsFadeEmit | ✅ | Whether to stop emitting in the finalization process |
+| 0x0755 | flag | IsFadeAlphaFade | ✅ | Whether to apply alpha fade in the finalization process |
+| 0x0756 | flag | IsScaleFade | ✅ | Whether to enable scale-fade |
+| 0x0757 | int8 | RandomSeedType | ✅ | Random seed type |
+| 0x0758 | flag | IsUpdateMatrixByEmit | ✅ | Updates the matrix at each emission |
+| 0x0759 | flag | TestAlways | ✅ | Whether to always test |
+| 0x075A | flag | InterpolateEmissionAmount | ✅ | Whether to interpolate the emission amount |
+| 0x075B | flag | IsAlphaFadeIn | ✅ | Whether to apply alpha fade-in |
+| 0x075C | flag | IsScaleFadeIn | ✅ | Whether to enable scale fade-in |
+| 0x075D | int8 | dummy/padding1 | ✅ | Padding |
+| 0x075E | int8 | dummy/padding2 | ✅ | Padding |
+| 0x075F | int8 | dummy/padding3 | ✅ | Padding |
+| 0x0760 | int32 | RandomSeed | ✅ | Random number seed |
+| 0x0764 | int32 | DrawPath | ✅ | Rendering pass |
+| 0x0768 | int32 | AlphaFadeTime | ✅ | Alpha fadeout duration |
+| 0x076C | int32 | FadeInTime | ✅ | Fade-in duration |
+| 0x0770 | float | TransX | ✅ | Emitter position X |
+| 0x0774 | float | TransY | ✅ | Emitter position Y |
+| 0x0778 | float | TransZ | ✅ | Emitter position Z |
+| 0x077C | float | TransRandX | ✅ | Matrix translation X randomness |
+| 0x0780 | float | TransRandY | ✅ | Matrix translation Y randomness |
+| 0x0784 | float | TransRandZ | ✅ | Matrix translation Z randomness |
+| 0x0788 | float | RotateX | ✅ | Emitter rotation X |
+| 0x078C | float | RotateY | ✅ | Emitter rotation Y |
+| 0x0790 | float | RotateZ | ✅ | Emitter rotation Z |
+| 0x0794 | float | RotateRandX | ✅ | Matrix rotation X randomness |
+| 0x0798 | float | RotateRandY | ✅ | Matrix rotation Y randomness |
+| 0x079C | float | RotateRandZ | ✅ | Matrix rotation Z randomness |
+| 0x07A0 | float | ScaleX | ✅ | Emitter scale X |
+| 0x07A4 | float | ScaleY | ✅ | Emitter scale Y |
+| 0x07A8 | float | ScaleZ | ✅ | Emitter scale Z |
+| 0x07AC | float | Color0R | ✅ | Emitter color 0 |
+| 0x07B0 | float | Color0G | ✅ | Emitter color 0 |
+| 0x07B4 | float | Color0B | ✅ | Emitter color 0 |
+| 0x07B8 | float | Color0A | ✅ | Emitter color 0 |
+| 0x07BC | float | Color1R | ✅ | Emitter color 1 |
+| 0x07C0 | float | Color1G | ✅ | Emitter color 1 |
+| 0x07C4 | float | Color1B | ✅ | Emitter color 1 |
+| 0x07C8 | float | Color1A | ✅ | Emitter color 1 |
+| 0x07CC | float | EmissionRangeNear | ✅ | Emission range near distance |
+| 0x07D0 | float | EmissionRangeFar | ✅ | Emission range far distance |
+| 0x07D4 | int32 | EmissionRatioFar | ✅ | Emission ratio at far distance |
 
-### 0x07D8-0x07EF : Inheritance params
+### 0x07D8-0x07EF : ChildInheritance 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x07D8 | flag | Velocity | ❌ | Inherited speed |
-| 0x07D9 | flag | Scale | ❌ | Inherited scale |
-| 0x07DA | flag | Rotate | ❌ | Inherited rotation |
-| 0x07DB | flag | ColorScale | ❌ | Inherited color scale |
-| 0x07DC | flag | Color0 | ❌ | Inherited color 0 |
-| 0x07DD | flag | Color1 | ❌ | Inherited color 1 |
-| 0x07DE | flag | Alpha0 | ❌ | Inherited alpha 0 |
-| 0x07DF | flag | Alpha1 | ❌ | Inherited alpha 1 |
-| 0x07E0 | flag | DrawPath | ❌ | Inherited draw path |
-| 0x07E1 | flag | PreDraw | ❌ | Draw before inherited class |
-| 0x07E2 | flag | Alpha0EachFrame | ❌ | Whether to inherit alpha0 in every frame |
-| 0x07E3 | flag | Alpha1EachFrame | ❌ | Whether to inherit alpha1 in every frame |
-| 0x07E4 | flag | EnableEmitterParticle | ❌ | Whether to generate an emitter for each particle |
-| 0x07E5 | int8 | reserved0 | ❌ | Padding |
-| 0x07E6 | int8 | reserved0 | ❌ | Padding |
-| 0x07E7 | int8 | reserved0 | ❌ | Padding |
-| 0x07E8 | float | VelocityRate | ❌ | Inherited velocity ratio |
-| 0x07EC | float | ScaleRate | ❌ | Inherited scale |
+| 0x07D8 | flag | Velocity | ✅ | Inherited speed |
+| 0x07D9 | flag | Scale | ✅ | Inherited scale |
+| 0x07DA | flag | Rotate | ✅ | Inherited rotation |
+| 0x07DB | flag | ColorScale | ✅ | Inherited color scale |
+| 0x07DC | flag | Color0 | ✅ | Inherited color 0 |
+| 0x07DD | flag | Color1 | ✅ | Inherited color 1 |
+| 0x07DE | flag | Alpha0 | ✅ | Inherited alpha 0 |
+| 0x07DF | flag | Alpha1 | ✅ | Inherited alpha 1 |
+| 0x07E0 | flag | DrawPath | ✅ | Inherited draw path |
+| 0x07E1 | flag | PreDraw | ✅ | Draw before inherited class |
+| 0x07E2 | flag | Alpha0EachFrame | ✅ | Whether to inherit alpha0 in every frame |
+| 0x07E3 | flag | Alpha1EachFrame | ✅ | Whether to inherit alpha1 in every frame |
+| 0x07E4 | flag | EnableEmitterParticle | ✅ | Whether to generate an emitter for each particle |
+| 0x07E5 | int8 | reserved0/Padding1 | ✅ | Padding |
+| 0x07E6 | int8 | reserved0/Padding2 | ✅ | Padding |
+| 0x07E7 | int8 | reserved0/Padding3 | ✅ | Padding |
+| unk | unk | UnknownV40 | 🔵 |  |
+| 0x07E8 | float | VelocityRate | ✅ | Inherited velocity ratio |
+| 0x07EC | float | ScaleRate | ✅ | Inherited scale |
 
-### 0x07F0-0x0837 : Emitter emission info
+### 0x07F0-0x0837 : Emission 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x07F0 | flag | IsOneTime | ✅ | Whether to only play once |
@@ -308,63 +311,63 @@
 | 0x0830 | float | EmitterDistMarg | ✅ | Threshold for traverse distance truncation |
 | 0x0834 | int32 | EmitterDistParticlesMax | ✅ | Maximum particle emissions when using distance emission |
 
-### 0x0838-0x0897: Emitter shape info
+### 0x0838-0x0897 : ShapeInfo 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0838 | flag | VolumeType | ❌ | Volume type |
-| 0x0839 | int8 | SweepStartRandom | ❌ | Arc width randomness |
-| 0x083A | int8 | ArcType | ❌ | Arc type |
-| 0x083B | flag | IsVolumeLatitudeEnabled | ❌ | Unused |
-| 0x083C | int8 | VolumeTblIndex | ❌ | Sphere volume table index |
-| 0x083D | int8 | VolumeTblIndex64 | ❌ | Sphere 64 volume table index |
-| 0x083E | int8 | VolumeLatitudeDir | ❌ | Sphere latitude direction |
-| 0x083F | flag | IsGpuEmitter | ❌ | Whether to enable the GPU emitter |
-| 0x0840 | float | SweepLongitude | ❌ | Value to use for calculating arc |
-| 0x0844 | float | SweepLatitude | ❌ | Latitude to use for calculating arc |
-| 0x0848 | float | SweepStart | ❌ | Arc width (start) |
-| 0x084C | float | VolumeSurfacePosRand | ❌ | Random position on emitter shape surface |
-| 0x0850 | float | CaliberRatio | ❌ | Caliber ratio |
-| 0x0854 | float | LineCenter | ❌ | Line center |
-| 0x0858 | float | LineLength | ❌ | Line length |
-| 0x085C | float | VolumeRadius | ❌ | Volume radius |
-| 0x0860 | float | VolumeRadius | ❌ | Volume radius |
-| 0x0864 | float | VolumeRadius | ❌ | Volume radius |
-| 0x0868 | float | VolumeFormScale | ❌ | Emitter scale |
-| 0x086C | float | VolumeFormScale | ❌ | Emitter scale |
-| 0x0870 | float | VolumeFormScale | ❌ | Emitter scale |
-| 0x0874 | int32 | PrimEmitType | ❌ | Emitter type when primitive was specified |
-| 0x0878 | int64 | PrimitiveIndex | ❌ | Primitive index |
-| 0x0880 | int32 | numDivideCircle | ❌ | Number of equilateral circular segments |
-| 0x0884 | int32 | numDivideCircleRandom | ❌ | Random number of equilateral circular segments |
-| 0x0888 | int32 | numDivideLine | ❌ | Number of equal length line segment divisions |
-| 0x088C | int32 | numDivideLineRandom | ❌ | Random number of equal length line segment divisions |
-| 0x0890 | flag | IsOnAnotherBinaryVolumePrimitive | ❌ | Whether the emitter shape primitive is present in other binaries |
-| 0x0891 | int8 | reserved0 | ❌ | Padding |
-| 0x0892 | int8 | reserved0 | ❌ | Padding |
-| 0x0893 | int8 | reserved0 | ❌ | Padding |
-| 0x0894 | int8 | reserved0 | ❌ | Padding |
-| 0x0895 | int8 | reserved0 | ❌ | Padding |
-| 0x0896 | int8 | reserved0 | ❌ | Padding |
-| 0x0897 | int8 | reserved0 | ❌ | Padding |
+| 0x0838 | flag | VolumeType | ✅ | Volume type |
+| 0x0839 | int8 | SweepStartRandom | ✅ | Arc width randomness |
+| 0x083A | int8 | ArcType | ✅ | Arc type |
+| 0x083B | flag | IsVolumeLatitudeEnabled | ✅ | Unused |
+| 0x083C | int8 | VolumeTblIndex | ✅ | Sphere volume table index |
+| 0x083D | int8 | VolumeTblIndex64 | ✅ | Sphere 64 volume table index |
+| 0x083E | int8 | VolumeLatitudeDir | ✅ | Sphere latitude direction |
+| 0x083F | flag | IsGpuEmitter | ✅ | Whether to enable the GPU emitter |
+| 0x0840 | float | SweepLongitude | ✅ | Value to use for calculating arc |
+| 0x0844 | float | SweepLatitude | ✅ | Latitude to use for calculating arc |
+| 0x0848 | float | SweepStart | ✅ | Arc width (start) |
+| 0x084C | float | VolumeSurfacePosRand | ✅ | Random position on emitter shape surface |
+| 0x0850 | float | CaliberRatio | ✅ | Caliber ratio |
+| 0x0854 | float | LineCenter | ✅ | Line center |
+| 0x0858 | float | LineLength | ✅ | Line length |
+| 0x085C | float | VolumeRadiusX | ✅ | Volume radius |
+| 0x0860 | float | VolumeRadiusY | ✅ | Volume radius |
+| 0x0864 | float | VolumeRadiusZ | ✅ | Volume radius |
+| 0x0868 | float | VolumeFormScaleX | ✅ | Emitter scale |
+| 0x086C | float | VolumeFormScaleY | ✅ | Emitter scale |
+| 0x0870 | float | VolumeFormScaleZ | ✅ | Emitter scale |
+| 0x0874 | int32 | PrimEmitType | ✅ | Emitter type when primitive was specified |
+| 0x0878 | int64 | PrimitiveIndex | ✅ | Primitive index |
+| 0x0880 | int32 | numDivideCircle | ✅ | Number of equilateral circular segments |
+| 0x0884 | int32 | numDivideCircleRandom | ✅ | Random number of equilateral circular segments |
+| 0x0888 | int32 | numDivideLine | ✅ | Number of equal length line segment divisions |
+| 0x088C | int32 | numDivideLineRandom | ✅ | Random number of equal length line segment divisions |
+| 0x0890 | flag | IsOnAnotherBinaryVolumePrimitive | ✅ | Whether the emitter shape primitive is present in other binaries |
+| 0x0891 | int8 | reserved0 | 🟡 | Padding |
+| 0x0892 | int8 | reserved0 | 🟡 | Padding |
+| 0x0893 | int8 | reserved0 | 🟡 | Padding |
+| 0x0894 | int8 | reserved0 | 🟡 | Padding |
+| 0x0895 | int8 | reserved0 | 🟡 | Padding |
+| 0x0896 | int8 | reserved0 | 🟡 | Padding |
+| 0x0897 | int8 | reserved0 | 🟡 | Padding |
 
-### 0x0898-0x08A7 : Renders config data
+### 0x0898-0x08A7 : RenderState 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0898 | flag | IsBlendEnable | ❌ | Blend |
-| 0x0899 | flag | IsDepthTest | ❌ | Depth test |
-| 0x089A | int8 | DepthFunc | ❌ | Depth test pass conditions |
-| 0x089B | flag | IsDepthMask | ❌ | Depth mask |
-| 0x089C | flag | IsAlphaTest | ❌ | Alpha Test |
-| 0x089D | int8 | AlphaFunc | ❌ | Alpha test pass conditions |
-| 0x089E | int8 | BlendType | ❌ | Blending type for blending with the framebuffer |
-| 0x089F | int8 | DisplaySide | ❌ | Display face |
-| 0x08A0 | float | AlphaThreshold | ❌ | Alpha threshold |
-| 0x08A4 | int8 | reserved0 | ❌ | Padding |
-| 0x08A5 | int8 | reserved0 | ❌ | Padding |
-| 0x08A6 | int8 | reserved0 | ❌ | Padding |
-| 0x08A7 | int8 | reserved0 | ❌ | Padding |
+| 0x0898 | flag | IsBlendEnable | ✅ | Blend |
+| 0x0899 | flag | IsDepthTest | ✅ | Depth test |
+| 0x089A | int8 | DepthFunc | ✅ | Depth test pass conditions |
+| 0x089B | flag | IsDepthMask | ✅ | Depth mask |
+| 0x089C | flag | IsAlphaTest | ✅ | Alpha Test |
+| 0x089D | int8 | AlphaFunc | ✅ | Alpha test pass conditions |
+| 0x089E | int8 | BlendType | ✅ | Blending type for blending with the framebuffer |
+| 0x089F | int8 | DisplaySide | ✅ | Display face |
+| 0x08A0 | float | AlphaThreshold | ✅ | Alpha threshold |
+| 0x08A4 | int8 | reserved0/padding | ✅ | Padding |
+| 0x08A5 | int8 | reserved0/padding | ✅ | Padding |
+| 0x08A6 | int8 | reserved0/padding | ✅ | Padding |
+| 0x08A7 | int8 | reserved0/padding | ✅ | Padding |
 
-### 0x08A8-0x08F7 : Particle info
+### 0x08A8-0x08F7 : ParticleData 
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x08A8 | flag | InfiniteLife | ✅ | Infinite lifespan |
@@ -407,35 +410,35 @@
 | 0x08F0 | int32 | Alpha1LoopRate | ✅ | Alpha 1 animation loop frame rate (percent of lifespan of one cycle) |
 | 0x08F4 | int32 | ScaleLoopRate | ✅ | Scale animation loop frame rate (percent of lifespan of one cycle) |
 
-### 0x08f8-0x090F : Emitter combiner info
+### 0x08f8-0x090F : Combiner (Emitter)
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x08F8 | int8 | ColorCombinerProcess | ❌ | Color calculation formula type |
-| 0x08F9 | int8 | AlphaCombinerProcess | ❌ | Alpha calculation formula type |
-| 0x08FA | flag | Texture1ColorBlend | ❌ | Combines the texture1 color with the color in the top row |
-| 0x08FB | flag | Texture2ColorBlend | ❌ | Combines the texture2 color with the color in the top row |
-| 0x08FC | flag | PrimitiveColorBlend | ❌ | Combines primitive color with the color in the top row |
-| 0x08FD | flag | Texture1AlphaBlend | ❌ | Combines the texture1 alpha with the alpha in the top row |
-| 0x08FE | flag | Texture2AlphaBlend | ❌ | Combines the texture2 alpha with the alpha in the top row |
-| 0x08FF | flag | PrimitiveAlphaBlend | ❌ | Combines primitive alpha with the alpha in the top row |
-| 0x0900 | int8 | TexColor0InputType | ❌ | Texture color0 input type |
-| 0x0901 | int8 | TexColor1InputType | ❌ | Texture color1 input type |
-| 0x0902 | int8 | TexColor2InputType | ❌ | Texture color2 input type |
-| 0x0903 | int8 | TexAlpha0InputType | ❌ | Texture alpha0 input type |
-| 0x0904 | int8 | TexAlpha1InputType | ❌ | Texture alpha1 input type |
-| 0x0905 | int8 | TexAlpha2InputType | ❌ | Texture alpha2 input type |
-| 0x0906 | int8 | PrimitiveColorInputType | ❌ | Primitive color input type |
-| 0x0907 | int8 | PrimitiveAlphaInputType | ❌ | Primitive alpha input type |
-| 0x0908 | int8 | ShaderType | ❌ | Shader type |
-| 0x0909 | int8 | ApplyAlpha | ❌ | Refraction shader or apply alpha value |
-| 0x090A | flag | IsDistortionByCameraDistance | ❌ | Whether to enhance the distortion according to the distance of the camera |
-| 0x090B | int8 | reserved0 | ❌ | Padding |
-| 0x090C | int8 | reserved0 | ❌ | Padding |
-| 0x090D | int8 | reserved0 | ❌ | Padding |
-| 0x090E | int8 | reserved0 | ❌ | Padding |
-| 0x090F | int8 | reserved0 | ❌ | Padding |
+| 0x08F8 | int8 | ColorCombinerProcess | ✅ | Color calculation formula type |
+| 0x08F9 | int8 | AlphaCombinerProcess | ✅ | Alpha calculation formula type |
+| 0x08FA | flag | Texture1ColorBlend | ✅ | Combines the texture1 color with the color in the top row |
+| 0x08FB | flag | Texture2ColorBlend | ✅ | Combines the texture2 color with the color in the top row |
+| 0x08FC | flag | PrimitiveColorBlend | ✅ | Combines primitive color with the color in the top row |
+| 0x08FD | flag | Texture1AlphaBlend | ✅ | Combines the texture1 alpha with the alpha in the top row |
+| 0x08FE | flag | Texture2AlphaBlend | ✅ | Combines the texture2 alpha with the alpha in the top row |
+| 0x08FF | flag | PrimitiveAlphaBlend | ✅ | Combines primitive alpha with the alpha in the top row |
+| 0x0900 | int8 | TexColor0InputType | ✅ | Texture color0 input type |
+| 0x0901 | int8 | TexColor1InputType | ✅ | Texture color1 input type |
+| 0x0902 | int8 | TexColor2InputType | ✅ | Texture color2 input type |
+| 0x0903 | int8 | TexAlpha0InputType | ✅ | Texture alpha0 input type |
+| 0x0904 | int8 | TexAlpha1InputType | ✅ | Texture alpha1 input type |
+| 0x0905 | int8 | TexAlpha2InputType | ✅ | Texture alpha2 input type |
+| 0x0906 | int8 | PrimitiveColorInputType | ✅ | Primitive color input type |
+| 0x0907 | int8 | PrimitiveAlphaInputType | ✅ | Primitive alpha input type |
+| 0x0908 | int8 | ShaderType | ✅ | Shader type |
+| 0x0909 | int8 | ApplyAlpha | ✅ | Refraction shader or apply alpha value |
+| 0x090A | flag | IsDistortionByCameraDistance | ✅ | Whether to enhance the distortion according to the distance of the camera |
+| 0x090B | int8 | reserved0 | 🟡 | Padding |
+| 0x090C | int8 | reserved0 | 🟡 | Padding |
+| 0x090D | int8 | reserved0 | 🟡 | Padding |
+| 0x090E | int8 | reserved0 | 🟡 | Padding |
+| 0x090F | int8 | reserved0 | 🟡 | Padding |
 
-### 0x0910-0x095F : Shader info
+### 0x0910-0x095F : ShaderReferences
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x0910 | int8 | Type | ✅ | Shader type |
@@ -446,138 +449,138 @@
 | 0x0918 | int32 | ComputeShaderIndex | ✅ | Compute shader index to use |
 | 0x091C | int32 | UserShaderIndex1 | ✅ | User shader index 1 |
 | 0x0920 | int32 | UserShaderIndex2 | ✅ | User shader index 2 |
-| 0x0924 | int32 | val_0x10/CustomShaderIndex | ✅ | Custom shader index |
-| 0x0928 | int64 | val_0x14&val_0x18/CustomShaderFlag | 🟡 | Custom shader flag |
-| 0x0930 | int64 | val_0x1C&val_0x20/CustomShaderSwitch | 🟡 | Switch selection state by option button |
+| 0x0924 | int32 | CustomShaderIndex | ✅ | Custom shader index |
+| 0x0928 | int64 | CustomShaderFlag | ✅ | Custom shader flag |
+| 0x0930 | int64 | CustomShaderSwitch | ✅ | Switch selection state by option button |
 | 0x0938 | int32 | ExtraShaderIndex2 | ✅ | Index of the shader generated by the effect combiner |
 | 0x093C | int32 | val_0x34/reserved1 | ✅ | Padding |
-| 0x0940 | char[16] | Params/UserShaderDefine1 | 🟡 | User shader definition 1 |
-| 0x0950 | char[16] | Params/UserShaderDefine2 | 🟡 | User shader definition 2 |
+| 0x0940 | char[16] | Params/UserShaderDefine1 | ✅ | User shader definition 1 |
+| 0x0950 | char[16] | Params/UserShaderDefine2 | ✅ | User shader definition 2 |
 
-### 0x0960-0x0963 Custom action data
+### 0x0960-0x0963 Action (Custom action data)
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0960 | int32 | CustomActionIndex | ❌ | Selected custom action index |
+| 0x0960 | int32 | CustomActionIndex | ✅ | Selected custom action index |
 
-### 0x0964-0x0993 : Particle initial velocity info
+### 0x0964-0x0993 : ParticleVelocity (Initial)
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0964 | float | AllDirection | ❌ | All-direction initial velocity |
-| 0x0968 | float | DesignatedDirScale | ❌ | Specified direction velocity |
-| 0x096C | float | DesignatedDirX | ❌ | Specified direction X |
-| 0x0970 | float | DesignatedDirY | ❌ | Specified direction Y |
-| 0x0974 | float | DesignatedDirZ | ❌ | Specified direction Z |
-| 0x0978 | float | DiffusionDirAngle | ❌ | Specified direction dispersion angle |
-| 0x097C | float | XZDiffusion | ❌ | Y axis diffusion speed |
-| 0x0980 | float | DiffusionX | ❌ | Diffusion initial velocity X |
-| 0x0984 | float | DiffusionY | ❌ | Diffusion initial velocity Y |
-| 0x0988 | float | DiffusionZ | ❌ | Diffusion initial velocity Z |
-| 0x098C | float | VelRandom | ❌ | Velocity randomness |
-| 0x0990 | float | EmVelInherit | ❌ | Inherited emitter velocity ratio |
+| 0x0964 | float | AllDirection | ✅ | All-direction initial velocity |
+| 0x0968 | float | DesignatedDirScale | ✅ | Specified direction velocity |
+| 0x096C | float | DesignatedDirX | ✅ | Specified direction X |
+| 0x0970 | float | DesignatedDirY | ✅ | Specified direction Y |
+| 0x0974 | float | DesignatedDirZ | ✅ | Specified direction Z |
+| 0x0978 | float | DiffusionDirAngle | ✅ | Specified direction dispersion angle |
+| 0x097C | float | XZDiffusion | ✅ | Y axis diffusion speed |
+| 0x0980 | float | DiffusionX | ✅ | Diffusion initial velocity X |
+| 0x0984 | float | DiffusionY | ✅ | Diffusion initial velocity Y |
+| 0x0988 | float | DiffusionZ | ✅ | Diffusion initial velocity Z |
+| 0x098C | float | VelRandom | ✅ | Velocity randomness |
+| 0x0990 | float | EmVelInherit | ✅ | Inherited emitter velocity ratio |
 
-### 0x0994-0x09BF : Particle color info
+### 0x0994-0x09BF : ParticleColor
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0994 | flag | val_0x0/IsSoftParticle | 🟡 | Soft particles |
-| 0x0995 | flag | val_0x1/IsFresnelAlpha | 🟡 | Fresnel alpha |
-| 0x0996 | flag | val_0x2/IsNearDistAlpha | 🟡 | Near distance alpha |
-| 0x0997 | flag | val_0x3/IsFarDistAlpha | 🟡 | Far distance alpha |
-| 0x0998 | flag | val_0x4/IsDecal | 🟡 | Decals |
-| 0x0999 | int8 | val_0x5/dummy | 🟡 | Padding |
-| 0x099A | int8 | val_0x6/dummy | 🟡 | Padding |
-| 0x099B | int8 | val_0x7/dummy | 🟡 | Padding |
-| 0x099C | int8 | Color0Type | 🟡 | Color0 behavior type |
-| 0x099D | int8 | Color1Type | 🟡 | Color1 behavior type |
-| 0x099E | int8 | Alpha0Type | 🟡 | Alpha0 behavior type |
-| 0x099F | int8 | Alpha1Type | 🟡 | Alpha1 behavior type |
-| 0x09A0 | float | Color0R | 🟡 | Color0 red component |
-| 0x09A4 | float | Color0G | 🟡 | Color0 green component |
-| 0x09A8 | float | Color0B | 🟡 | Color0 blue component |
-| 0x09AC | float | Alpha0 | 🟡 | Alpha0 |
-| 0x09B0 | float | Color1R | 🟡 | Color1 red component |
-| 0x09B4 | float | Color1G | 🟡 | Color1 green component |
-| 0x09B8 | float | Color1B | 🟡 | Color1 blue component |
-| 0x09BC | float | Alpha1 | 🟡 | Alpha1 |
+| 0x0994 | flag | val_0x0/IsSoftParticle | ✅ | Soft particles |
+| 0x0995 | flag | val_0x1/IsFresnelAlpha | ✅ | Fresnel alpha |
+| 0x0996 | flag | val_0x2/IsNearDistAlpha | ✅ | Near distance alpha |
+| 0x0997 | flag | val_0x3/IsFarDistAlpha | ✅ | Far distance alpha |
+| 0x0998 | flag | val_0x4/IsDecal | ✅ | Decals |
+| 0x0999 | int8 | val_0x5/dummy | ✅ | Padding |
+| 0x099A | int8 | val_0x6/dummy | ✅ | Padding |
+| 0x099B | int8 | val_0x7/dummy | ✅ | Padding |
+| 0x099C | int8 | Color0Type | ✅ | Color0 behavior type |
+| 0x099D | int8 | Color1Type | ✅ | Color1 behavior type |
+| 0x099E | int8 | Alpha0Type | ✅ | Alpha0 behavior type |
+| 0x099F | int8 | Alpha1Type | ✅ | Alpha1 behavior type |
+| 0x09A0 | float | Color0R | ✅ | Color0 red component |
+| 0x09A4 | float | Color0G | ✅ | Color0 green component |
+| 0x09A8 | float | Color0B | ✅ | Color0 blue component |
+| 0x09AC | float | Alpha0 | ✅ | Alpha0 |
+| 0x09B0 | float | Color1R | ✅ | Color1 red component |
+| 0x09B4 | float | Color1G | ✅ | Color1 green component |
+| 0x09B8 | float | Color1B | ✅ | Color1 blue component |
+| 0x09BC | float | Alpha1 | ✅ | Alpha1 |
 
-### 0x09C0-0x09E3 : Particle scaling info
+### 0x09C0-0x09E3 : ParticleScale
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x09C0 | float | ScaleX | 🟡 | Base scale |
-| 0x09C4 | float | ScaleY | 🟡 | Base scale |
-| 0x09C8 | float | ScaleZ | 🟡 | Base scale |
-| 0x09CC | float | ScaleRandomX | 🟡 | Base scale randomness |
-| 0x09D0 | float | ScaleRandomY | 🟡 | Base scale randomness |
-| 0x09D4 | float | ScaleRandomZ | 🟡 | Base scale randomness |
-| 0x09D8 | flag | val_0x18/EnableScalingByCameraDistNear | 🟡 | Whether to enable or disable near camera distance scaling |
-| 0x09D9 | flag | val_0x19/EnableScalingByCameraDistFar | 🟡 | Whether to enable or disable far camera distance scaling |
-| 0x09DA | flag | val_0x1A/EnableAddScaleY | 🟡 | Y velocity scaling |
-| 0x09DB | flag | val_0x1B/EnableLinkFovyToScaleValue | 🟡 | Relate angle of view to scale restrictions |
-| 0x09DC | float | ScaleMin | 🟡 | Particle scaling limit distance (near) |
-| 0x09E0 | float | ScaleMax | 🟡 | Particle scaling limit distance (far) |
+| 0x09C0 | float | ScaleX | ✅ | Base scale |
+| 0x09C4 | float | ScaleY | ✅ | Base scale |
+| 0x09C8 | float | ScaleZ | ✅ | Base scale |
+| 0x09CC | float | ScaleRandomX | ✅ | Base scale randomness |
+| 0x09D0 | float | ScaleRandomY | ✅ | Base scale randomness |
+| 0x09D4 | float | ScaleRandomZ | ✅ | Base scale randomness |
+| 0x09D8 | flag | EnableScalingByCameraDistNear | ✅ | Whether to enable or disable near camera distance scaling |
+| 0x09D9 | flag | EnableScalingByCameraDistFar | ✅ | Whether to enable or disable far camera distance scaling |
+| 0x09DA | flag | EnableAddScaleY | ✅ | Y velocity scaling |
+| 0x09DB | flag | EnableLinkFovyToScaleValue | ✅ | Relate angle of view to scale restrictions |
+| 0x09DC | float | ScaleMin | ✅ | Particle scaling limit distance (near) |
+| 0x09E0 | float | ScaleMax | ✅ | Particle scaling limit distance (far) |
 
-### 0x09E4-0x09EF : Particle fluctuation info
+### 0x09E4-0x09EF : ParticleFluctuation
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x09E4 | flag | IsApplyAlpha | ❌ | Whether to apply to alpha |
-| 0x09E5 | flag | IsApplayScale | ❌ | Whether to apply to scaling |
-| 0x09E6 | flag | IsApplayScaleY | ❌ | Set the y-axis individually |
-| 0x09E7 | flag | IsWaveType | ❌ | Fluctuation waveform type |
-| 0x09E8 | flag | IsPhaseRandomX | ❌ | Dependent randomness X |
-| 0x09E9 | flag | IsPhaseRandomY | ❌ | Fluctuation randomness X |
-| 0x09EA | int8 | reserved0 | ❌ | Padding |
-| 0x09EB | int8 | reserved0 | ❌ | Padding |
-| 0x09EC | int8 | reserved0 | ❌ | Padding |
-| 0x09ED | int8 | reserved0 | ❌ | Padding |
-| 0x09EE | int8 | reserved0 | ❌ | Padding |
-| 0x09EF | int8 | reserved0 | ❌ | Padding |
+| 0x09E4 | flag | IsApplyAlpha | ✅ | Whether to apply to alpha |
+| 0x09E5 | flag | IsApplayScale | ✅ | Whether to apply to scaling |
+| 0x09E6 | flag | IsApplayScaleY | ✅ | Set the y-axis individually |
+| 0x09E7 | flag | IsWaveType | ✅ | Fluctuation waveform type |
+| 0x09E8 | flag | IsPhaseRandomX | ✅ | Dependent randomness X |
+| 0x09E9 | flag | IsPhaseRandomY | ✅ | Fluctuation randomness X |
+| 0x09EA | int8 | reserved0 | 🟡 | Padding |
+| 0x09EB | int8 | reserved0 | 🟡 | Padding |
+| 0x09EC | int8 | reserved0 | 🟡 | Padding |
+| 0x09ED | int8 | reserved0 | 🟡 | Padding |
+| 0x09EE | int8 | reserved0 | 🟡 | Padding |
+| 0x09EF | int8 | reserved0 | 🟡 | Padding |
 
-### 0x09F0-0xA4F : Texture sampler data
+### 0x09F0-0xA4F : Sampler
 Three texture samplers are used.
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
 | 0x09F0+0x20n | int64 | TextureID | ✅ | GUID of texture to use |
-| 0x09F8+0x20n | int8 | WrapU | ✅ | U wrap mode. In `.json`, this can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
-| 0x09F9+0x20n | int8 | WrapV | ✅ | V wrap mode. In `.json`, this can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
+| 0x09F8+0x20n | int8 | WrapU | ✅ | U wrap mode. This can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
+| 0x09F9+0x20n | int8 | WrapV | ✅ | V wrap mode. This can be "Mirror", "ClampEdge", or "Repeat". How these relate to the int8 is currently unknown |
 | 0x09FA+0x20n | int8 | Filter | ✅ | Filter mode |
-| 0x09FB+0x20n | int8 | isSphereMap | ❌ | Whether sphere map is used |
+| 0x09FB+0x20n | int8 | isSphereMap | ✅ | Whether sphere map is used |
 | 0x09FC+0x20n | float | MaxLOD | ✅ | Effective mip level (0.0 to 15.99) |
 | 0x0A00+0x20n | float | LODBias | ✅ | Mip level bias |
-| 0x0A04+0x20n | int8 | MipLevelLimit | ❌ | Restrict the mipmap level |
-| 0x0A05+0x20n | flag | IsDensityFixedU | ❌ | Fix texture density option U |
-| 0x0A06+0x20n | flag | IsDensityFixedV | ❌ | Fix texture density option V |
-| 0x0A07+0x20n | flag | IsSquareRgb | ❌ | Whether to square the texture RGB values and get them (linear approximations) |
-| 0x0A08+0x20n | flag | IsOnAnotherBinary | ❌ | Indicates that a texture was removed on the sub-binary side |
-| 0x0A09+0x20n | int8 | reserved0 | ❌ | Padding |
-| 0x0A0A+0x20n | int8 | reserved0 | ❌ | Padding |
-| 0x0A0B+0x20n | int8 | reserved0 | ❌ | Padding |
-| 0x0A0C+0x20n | int8 | reserved0 | ❌ | Padding |
-| 0x0A0D+0x20n | int8 | reserved0 | ❌ | Padding |
-| 0x0A0E+0x20n | int8 | reserved0 | ❌ | Padding |
-| 0x0A0F+0x20n | int8 | reserved0 | ❌ | Padding |
+| 0x0A04+0x20n | int8 | MipLevelLimit | ✅ | Restrict the mipmap level |
+| 0x0A05+0x20n | flag | IsDensityFixedU | ✅ | Fix texture density option U |
+| 0x0A06+0x20n | flag | IsDensityFixedV | ✅ | Fix texture density option V |
+| 0x0A07+0x20n | flag | IsSquareRgb | ✅ | Whether to square the texture RGB values and get them (linear approximations) |
+| 0x0A08+0x20n | flag | IsOnAnotherBinary | ✅ | Indicates that a texture was removed on the sub-binary side |
+| 0x0A09+0x20n | int8 | reserved0 | 🟡 | Padding |
+| 0x0A0A+0x20n | int8 | reserved0 | 🟡 | Padding |
+| 0x0A0B+0x20n | int8 | reserved0 | 🟡 | Padding |
+| 0x0A0C+0x20n | int8 | reserved0 | 🟡 | Padding |
+| 0x0A0D+0x20n | int8 | reserved0 | 🟡 | Padding |
+| 0x0A0E+0x20n | int8 | reserved0 | 🟡 | Padding |
+| 0x0A0F+0x20n | int8 | reserved0 | 🟡 | Padding |
 
-### 0x0A50-0xA7F : Texture animation info
+### 0x0A50-0xA7F : TextureAnim
 Three texture animations are used.
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0A50+0x10n | int8 | PatternAnimType | ❌ | Pattern animation type |
-| 0x0A51+0x10n | int8 | IsScroll | ❌ | Enable or disable UV scrolling animation |
-| 0x0A52+0x10n | int8 | IsRotate | ❌ | Enable or disable UV rotation animation |
-| 0x0A53+0x10n | int8 | IsScale | ❌ | Enable or disable UV scaling animation |
-| 0x0A54+0x10n | int8 | Repeat | ❌ |  |Repetition count
-| 0x0A55+0x10n | int8 | InvRandU | ❌ | U invert randomness |
-| 0x0A56+0x10n | int8 | InvRandV | ❌ | V invert randomness |
-| 0x0A57+0x10n | int8 | IsPatAnimLoopRandom | ❌ | Texture pattern animation loop start randomness |
-| 0x0A58+0x10n | int8 | UvChannel | ❌ | Primitive UV channel |
-| 0x0A59+0x10n | int8 | IsCrossfade | ❌ | Enable/disable crossfade |
-| 0x0A5A+0x10n | int8 | reserved0 | ❌ | Padding |
-| 0x0A5B+0x10n | int8 | reserved0 | ❌ | Padding |
-| 0x0A5C+0x10n | int8 | reserved0 | ❌ | Padding |
-| 0x0A5D+0x10n | int8 | reserved0 | ❌ | Padding |
-| 0x0A5E+0x10n | int8 | reserved0 | ❌ | Padding |
-| 0x0A5F+0x10n | int8 | reserved0 | ❌ | Padding |
+| 0x0A50+0x10n | int8 | PatternAnimType | ✅ | Pattern animation type |
+| 0x0A51+0x10n | int8 | IsScroll | ✅ | Enable or disable UV scrolling animation |
+| 0x0A52+0x10n | int8 | IsRotate | ✅ | Enable or disable UV rotation animation |
+| 0x0A53+0x10n | int8 | IsScale | ✅ | Enable or disable UV scaling animation |
+| 0x0A54+0x10n | int8 | Repeat | ✅ |  |Repetition count
+| 0x0A55+0x10n | int8 | InvRandU | ✅ | U invert randomness |
+| 0x0A56+0x10n | int8 | InvRandV | ✅ | V invert randomness |
+| 0x0A57+0x10n | int8 | IsPatAnimLoopRandom | ✅ | Texture pattern animation loop start randomness |
+| 0x0A58+0x10n | int8 | UvChannel | ✅ | Primitive UV channel |
+| 0x0A59+0x10n | int8 | IsCrossfade | ✅ | Enable/disable crossfade |
+| 0x0A5A+0x10n | int8 | reserved0/padding1 | ✅ | Padding |
+| 0x0A5B+0x10n | int8 | reserved0/padding1 | ✅ | Padding |
+| 0x0A5C+0x10n | int8 | reserved0/padding2 | ✅ | Padding |
+| 0x0A5D+0x10n | int8 | reserved0/padding2 | ✅ | Padding |
+| 0x0A5E+0x10n | int8 | reserved0/padding3 | ✅ | Padding |
+| 0x0A5F+0x10n | int8 | reserved0/padding3 | ✅ | Padding |
 
 ### 0x0A80-0x0ABF : Reserved
 Possibly padding.
 | Offset | Type | Name | in .json? | Description |
 | ---: | --- | --- | --- | --- |
-| 0x0A80 | float[16] | reservedArea | ❌ | Reserved region |
+| 0x0A80 | float[16] | reservedArea | ✅ | Padding |
