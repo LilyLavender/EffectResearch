@@ -7,5 +7,7 @@ Research into Smash Ultimate's effects
     - EmitterData documentation
 2. Converters
     - ea_subsection_converter
+        - Converts emitter subsections (only `EA__`)
 3. Plugins
     - eff_research_helper
+        - Allows for very fast testing of emitter changes
