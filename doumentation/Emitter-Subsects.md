@@ -9,7 +9,7 @@ All EAs have the same format:
 | 0x00 | flag | Enable `01` or disable `00` animation |
 | 0x01 | flag | Loop animation |
 | 0x02 | flag | Randomize playback start frame |
-| 0x03 | flag | Padding region |
+| 0x03 | flag | Padding |
 | 0x04 | int | Number of keys |
 | 0x08 | int | Number of times to loop |
 | 0x0C+0x10n | float | Keyframe n X |
@@ -27,7 +27,7 @@ Here's an example EAET:
     00 00 00 00 00 00 00 00 00 00 50 41 00 00 00 00 
     00 00 00 00 00 00 00 00 00 00 60 41
 ```
-The anim is **enabled**, will **not loop**, does **not have a random start frame**, does **not have a padding region**, has **5 anim keys**, will **loop 0 times**, and has the following keys:
+The anim is **enabled**, will **not loop**, does **not have a random start frame**, has **5 anim keys**, will **loop 0 times**, and has the following keys:
 ```
     {
       "X": 150.0,
@@ -127,9 +127,9 @@ More documentation for fields is needed.
 | Offset | Type | Description |
 | ---: | --- | --- |
 | 0x00 | flag | Convergence type |
-| 0x01 | flag | Padding X |
-| 0x02 | flag | Padding Y |
-| 0x03 | flag | Padding Z |
+| 0x01 | flag | Padding |
+| 0x02 | flag | Padding |
+| 0x03 | flag | Padding |
 | 0x04 | float | Convergence field position X |
 | 0x08 | float | Convergence field position Y |
 | 0x0C | float | Convergence field position Z |
@@ -249,9 +249,9 @@ More documentation for fields is needed.
 | Offset | Type | Description |
 | ---: | --- | --- |
 | 0x00 | flag | Whether to add in world coordinate system |
-| 0x01 | flag | Padding X |
-| 0x02 | flag | Padding Y |
-| 0x03 | flag | Padding Z |
+| 0x01 | flag | Padding |
+| 0x02 | flag | Padding |
+| 0x03 | flag | Padding |
 | 0x04 | float | Add to position X |
 | 0x08 | float | Add to position Y |
 | 0x0C | float | Add to position Z |
